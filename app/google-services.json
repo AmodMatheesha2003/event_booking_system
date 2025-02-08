@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "354612365177",
+    "firebase_url": "https://myevents-5d34e-default-rtdb.firebaseio.com",
+    "project_id": "myevents-5d34e",
+    "storage_bucket": "myevents-5d34e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354612365177:android:a080c6172ce228c9efd1a8",
+        "android_client_info": {
+          "package_name": "com.nibm.myevents"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYQrocTF5VGsb_Veb8foC2hQgkEcE5Bgk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354612365177:android:4284263f896ef20fefd1a8",
+        "android_client_info": {
+          "package_name": "com.nibm.work"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYQrocTF5VGsb_Veb8foC2hQgkEcE5Bgk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
