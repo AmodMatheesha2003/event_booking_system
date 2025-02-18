@@ -1,6 +1,9 @@
 package com.nibm.myevents
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -35,6 +38,11 @@ class LoginActivity : AppCompatActivity() {
         val signupRedirectText = findViewById<TextView>(R.id.signupRedirectText)
 
         loginButton.setOnClickListener {
+            if (!NetworkUtils.isInternetAvailable(this)) {
+                Toast.makeText(this, "No internet connection. Please check your network.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
 

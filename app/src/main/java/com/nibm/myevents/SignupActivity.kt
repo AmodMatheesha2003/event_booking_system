@@ -37,6 +37,10 @@ class SignupActivity : AppCompatActivity() {
             val password = passwordEditText.text.toString().trim()
             val confirmPassword = confirmPasswordEditText.text.toString().trim()
 
+            if (!NetworkUtils.isInternetAvailable(this)) {
+                Toast.makeText(this, "No internet connection. Please check your network.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
             if (name.isEmpty()) {
                 Toast.makeText(this, "Please enter the name!", Toast.LENGTH_SHORT).show()
             }else if (email.isEmpty()) {
