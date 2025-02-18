@@ -1,4 +1,4 @@
- package com.nibm.myevents
+package com.nibm.myevents
 
 import android.content.Intent
 import android.os.Bundle
