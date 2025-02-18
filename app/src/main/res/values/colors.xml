@@ -5,4 +5,13 @@
     <color name="yellow">#FFD700</color>
     <color name="blue">#5989DB</color>
     <color name="lavender">#8692F7</color>
+    <color name="light_black">#2D2D2D</color>
+
+    <color name="hint_color">#7F7F7F</color>
+
+    <color name="pastel_green">#C8E6C9</color>
+    <color name="pastel_blue">#BBDEFB</color>
+    <color name="pastel_red">#FFCDD2</color>
+    <color name="pastel_yellow">#FFF9C4</color>
+
 </resources>
