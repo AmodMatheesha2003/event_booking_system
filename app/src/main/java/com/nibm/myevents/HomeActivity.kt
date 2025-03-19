@@ -27,7 +27,7 @@ class HomeActivity : AppCompatActivity() {
                 R.id.nav_home -> loadFragment(HomeFragment(), R.color.blue)
                 R.id.nav_booking -> loadFragment(MyBookingsFragment(), R.color.yellow)
                 R.id.nav_verifytickets -> loadFragment(VerifyTicketsFragment(), R.color.yellow)
-                R.id.nav_profile -> loadFragment(ProfileFragment(), R.color.yellow)
+                R.id.nav_profile -> loadFragment(ProfileFragment(), R.color.blue)
             }
             true
         }
