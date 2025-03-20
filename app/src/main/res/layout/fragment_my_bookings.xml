@@ -8,12 +8,31 @@
     android:background="@drawable/blackgroungimage"
     tools:context=".MyBookingsFragment">
 
+    <!-- My Bookings Title -->
     <TextView
         android:id="@+id/descriptionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="My Bookings Fragment"
-        android:textSize="18sp"
+        android:text="My Bookings"
+        android:textSize="28sp"
         android:textStyle="bold"
-        android:textColor="@android:color/black"/>
+        android:textColor="@color/white"/>
+
+    <!-- Instruction Text -->
+    <TextView
+        android:id="@+id/instructionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="On the event day, show this QR code to the security for entry."
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"/>
+
+    <!-- QR Code Image -->
+    <ImageView
+        android:id="@+id/qrCodeImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
 </LinearLayout>
