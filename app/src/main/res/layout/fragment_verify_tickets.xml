@@ -1,18 +1,64 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:gravity="center"
     android:padding="16dp"
+    android:background="@drawable/blackgroungimage"
     tools:context=".VerifyTicketsFragment">
 
-    <TextView
-        android:id="@+id/descriptionText"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Verify Tickets Fragment"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"/>
+        android:padding="20dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="10dp"
+        android:background="@color/light_black">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/descriptionText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Verify Tickets"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:paddingBottom="12dp"
+                android:textAlignment="center"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/scanButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Scan QR Code"
+                android:textSize="16sp"
+                app:cornerRadius="12dp"
+                app:backgroundTint="@color/teal_700"
+                app:rippleColor="@color/teal_200"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="16dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/resultTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Scanned result will appear here"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:padding="12dp"
+                android:background="@color/light_gray"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
 </LinearLayout>

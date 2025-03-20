@@ -57,6 +57,7 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
     implementation ("com.squareup.picasso:picasso:2.71828")
+    implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
 }
 
 
