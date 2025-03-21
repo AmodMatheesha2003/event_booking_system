@@ -10,3 +10,4 @@ data class Event(
     val stime: String? = "",
     val ticketPrice: String? = ""
 )
+

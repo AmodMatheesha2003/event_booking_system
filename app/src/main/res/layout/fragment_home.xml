@@ -25,16 +25,16 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/profileImage"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/profile_img"
-                android:contentDescription="Profile Image"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/searchContainer"
-                app:circleCrop="true"/>
+<!--            <ImageView-->
+<!--                android:id="@+id/profileImage"-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:src="@drawable/profile_img"-->
+<!--                android:contentDescription="Profile Image"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/searchContainer"-->
+<!--                app:circleCrop="true"/>-->
 
             <TextView
                 android:id="@+id/greetingText"

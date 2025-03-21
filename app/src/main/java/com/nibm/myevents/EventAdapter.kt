@@ -1,8 +1,10 @@
 package com.nibm.myevents
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -13,12 +15,11 @@ class EventAdapter(private val eventList: ArrayList<Event>) :
 
     class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val eventName: TextView = view.findViewById(R.id.eventName)
-        val eventDetails: TextView = view.findViewById(R.id.eventDetails)
         val eventDate: TextView = view.findViewById(R.id.eventDate)
-        val eventTime: TextView = view.findViewById(R.id.eventTime)
-        val eventLocation: TextView = view.findViewById(R.id.eventLocation)
         val ticketPrice: TextView = view.findViewById(R.id.ticketPrice)
         val eventImage: ImageView = view.findViewById(R.id.eventImage)
+        val seeMoreButton: Button = view.findViewById(R.id.seeMoreButton)
+        val eventLocation: TextView = view.findViewById(R.id.eventLocation)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -29,16 +30,26 @@ class EventAdapter(private val eventList: ArrayList<Event>) :
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = eventList[position]
         holder.eventName.text = event.eventName
-        holder.eventDetails.text = event.eventDetails
         holder.eventDate.text = "Date: ${event.date}"
-        holder.eventTime.text = "Time: ${event.stime} - ${event.etime}"
         holder.eventLocation.text = "Location: ${event.location}"
         holder.ticketPrice.text = "Price: ${event.ticketPrice} LKR"
-
 
         Glide.with(holder.itemView.context)
             .load(event.imageUrl)
             .into(holder.eventImage)
+
+        holder.seeMoreButton.setOnClickListener {
+            val intent = Intent(holder.itemView.context, EventDetailsActivity::class.java).apply {
+                putExtra("eventName", event.eventName)
+                putExtra("eventDetails", event.eventDetails)
+                putExtra("eventDate", event.date)
+                putExtra("eventTime", "${event.stime} - ${event.etime}")
+                putExtra("eventLocation", event.location)
+                putExtra("ticketPrice", event.ticketPrice)
+                putExtra("imageUrl", event.imageUrl)
+            }
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {
