@@ -5,8 +5,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import android.widget.ImageButton
 
 class EventDetailsActivity : AppCompatActivity() {
+    private var quantity: Int = 1
+    private lateinit var ticketQuantity: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +48,30 @@ class EventDetailsActivity : AppCompatActivity() {
             .into(eventImage)
 
         goBackButton.setOnClickListener {
-                    finish()
+            finish()
         }
+
+        ticketQuantity = findViewById(R.id.ticketQuantity)
+
+        val incrementButton: ImageButton = findViewById(R.id.incrementButton)
+        val decrementButton: ImageButton = findViewById(R.id.decrementButton)
+
+        incrementButton.setOnClickListener {
+            if (quantity < 6) {
+                quantity++
+                updateQuantity()
+            }
+        }
+
+        decrementButton.setOnClickListener {
+            if (quantity > 1) {
+                quantity--
+                updateQuantity()
+            }
+        }
+    }
+
+    private fun updateQuantity() {
+        ticketQuantity.text = quantity.toString()
     }
 }
