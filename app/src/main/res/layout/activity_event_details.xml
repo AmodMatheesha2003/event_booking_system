@@ -228,6 +228,16 @@
                         android:scaleType="centerInside"/>
 
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/totalPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Price: 0 LKR"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_alignParentBottom="true"
+                    android:paddingTop="20dp"/>
 
 
             </LinearLayout>
