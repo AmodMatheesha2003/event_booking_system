@@ -28,6 +28,8 @@ class EventDetailsActivity : AppCompatActivity() {
         val price = intent.getStringExtra("ticketPrice")
         val imageUrl = intent.getStringExtra("imageUrl")
 
+        val goBackButton: ImageView = findViewById(R.id.goBackButton)
+
         eventName.text = name
         eventDetails.text = details
         eventDate.text = "Date: $date"
@@ -38,5 +40,9 @@ class EventDetailsActivity : AppCompatActivity() {
         Glide.with(this)
             .load(imageUrl)
             .into(eventImage)
+
+        goBackButton.setOnClickListener {
+                    finish()
+        }
     }
 }
