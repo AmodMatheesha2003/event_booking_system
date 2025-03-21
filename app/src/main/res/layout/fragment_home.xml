@@ -46,7 +46,6 @@
                 android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/profileImage"
                 app:layout_constraintBottom_toTopOf="@id/subText"/>
 
             <TextView
@@ -57,7 +56,6 @@
                 android:textSize="14sp"
                 android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/profileImage"
                 app:layout_constraintTop_toBottomOf="@id/greetingText"/>
 
             <androidx.cardview.widget.CardView

@@ -1,0 +1,212 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp"
+    android:background="@drawable/blackgroungimage">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/goBackButtonpayement"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/backbutton"
+            android:contentDescription="Go Back"
+            android:padding="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:scaleType="centerInside"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payment"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:paddingLeft="10dp"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:background="@drawable/rounded_border">
+
+            <TextView
+                android:id="@+id/paymentEventName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Event Name"/>
+
+
+            <TextView
+                android:id="@+id/paymentTicketQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/hint_color"
+                android:layout_marginTop="7dp"
+                android:text="Ticket Quantity: 1"/>
+
+            <TextView
+                android:id="@+id/paymentTotalAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                android:layout_gravity="center"
+                android:text="LKR 1000"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="7dp"
+                android:text="Pay with card"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="22dp"
+                android:textStyle="bold"
+                android:text="Email"/>
+
+            <EditText
+                android:id="@+id/payement_email"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/lavendor_border"
+                android:drawableLeft="@drawable/baseline_email_24"
+                android:drawablePadding="8dp"
+                android:padding="8dp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="22dp"
+                android:textStyle="bold"
+                android:text="Card Information"/>
+
+            <EditText
+                android:id="@+id/cardinformationnumber"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/lavendor_border"
+                android:drawableRight="@drawable/visacard"
+                android:drawablePadding="8dp"
+                android:hint="Number"
+                android:textColorHint="@color/hint_color"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:inputType="number"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="2dp"
+                android:weightSum="2">
+
+                <EditText
+                    android:id="@+id/cardinformationdate"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/lavendor_border"
+                    android:drawablePadding="8dp"
+                    android:hint="MM/YY"
+                    android:textColorHint="@color/hint_color"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:id="@+id/cardinformationcvcr"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/lavendor_border"
+                    android:drawablePadding="8dp"
+                    android:hint="CVC"
+                    android:textColorHint="@color/hint_color"
+                    android:drawableRight="@drawable/cvc"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:gravity="center_vertical" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="* All purchases are final and non-refundable"
+                android:textSize="14sp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:textColor="@color/hint_color"
+                android:textStyle="bold"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/payButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pay"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="bottom"
+                android:backgroundTint="@color/lavender"
+                app:cornerRadius="20dp"
+                app:icon="@drawable/lockpay"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp" />
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

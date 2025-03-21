@@ -6,6 +6,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import android.widget.ImageButton
+import android.widget.Button
+import android.content.Intent
 
 class EventDetailsActivity : AppCompatActivity() {
     private var quantity: Int = 1
@@ -25,6 +27,7 @@ class EventDetailsActivity : AppCompatActivity() {
         val ticketPriceText: TextView = findViewById(R.id.ticketPrice)
         val ticketAmount: TextView = findViewById(R.id.ticketAmount)
         val eventImage: ImageView = findViewById(R.id.eventImage)
+        val payButton: Button = findViewById(R.id.payButton)
 
         val name = intent.getStringExtra("eventName")
         val details = intent.getStringExtra("eventDetails")
@@ -76,6 +79,17 @@ class EventDetailsActivity : AppCompatActivity() {
         }
 
         updateQuantity()
+
+         payButton.setOnClickListener {
+            val totalPrice = ticketPrice * quantity
+            val intent = Intent(this, PaymentActivity::class.java).apply {
+                putExtra("eventName", name)
+                putExtra("totalPrice", totalPrice)
+                putExtra("ticketQuantity", quantity)
+            }
+            startActivity(intent)
+        }
+
     }
 
     private fun updateQuantity() {
