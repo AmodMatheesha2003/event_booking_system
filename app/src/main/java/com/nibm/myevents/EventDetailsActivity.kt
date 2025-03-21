@@ -18,6 +18,7 @@ class EventDetailsActivity : AppCompatActivity() {
         val eventTime: TextView = findViewById(R.id.eventTime)
         val eventLocation: TextView = findViewById(R.id.eventLocation)
         val ticketPrice: TextView = findViewById(R.id.ticketPrice)
+        val ticketAmount: TextView = findViewById(R.id.ticketAmount)
         val eventImage: ImageView = findViewById(R.id.eventImage)
 
         val name = intent.getStringExtra("eventName")
@@ -26,6 +27,7 @@ class EventDetailsActivity : AppCompatActivity() {
         val time = intent.getStringExtra("eventTime")
         val location = intent.getStringExtra("eventLocation")
         val price = intent.getStringExtra("ticketPrice")
+        val amount = intent.getStringExtra("ticketAmount")
         val imageUrl = intent.getStringExtra("imageUrl")
 
         val goBackButton: ImageView = findViewById(R.id.goBackButton)
@@ -36,6 +38,7 @@ class EventDetailsActivity : AppCompatActivity() {
         eventTime.text = "Time: $time"
         eventLocation.text = "Location: $location"
         ticketPrice.text = "Price: $price LKR"
+        ticketAmount.text = "$amount"
 
         Glide.with(this)
             .load(imageUrl)

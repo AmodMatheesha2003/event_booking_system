@@ -8,6 +8,6 @@ data class Event(
     val imageUrl: String? = "",
     val location: String? = "",
     val stime: String? = "",
-    val ticketPrice: String? = ""
+    val ticketPrice: String? = "",
+    val ticketAmount: String? = ""
 )
-

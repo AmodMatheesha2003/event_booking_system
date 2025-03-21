@@ -16,10 +16,10 @@ class EventAdapter(private val eventList: ArrayList<Event>) :
     class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val eventName: TextView = view.findViewById(R.id.eventName)
         val eventDate: TextView = view.findViewById(R.id.eventDate)
+        val eventLocation: TextView = view.findViewById(R.id.eventLocation)
         val ticketPrice: TextView = view.findViewById(R.id.ticketPrice)
         val eventImage: ImageView = view.findViewById(R.id.eventImage)
         val seeMoreButton: Button = view.findViewById(R.id.seeMoreButton)
-        val eventLocation: TextView = view.findViewById(R.id.eventLocation)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -47,6 +47,7 @@ class EventAdapter(private val eventList: ArrayList<Event>) :
                 putExtra("eventLocation", event.location)
                 putExtra("ticketPrice", event.ticketPrice)
                 putExtra("imageUrl", event.imageUrl)
+                putExtra("ticketAmount", event.ticketAmount)
             }
             holder.itemView.context.startActivity(intent)
         }
