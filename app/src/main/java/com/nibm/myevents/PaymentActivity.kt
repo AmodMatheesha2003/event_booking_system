@@ -53,7 +53,6 @@ class PaymentActivity : AppCompatActivity() {
                 val userId = user.uid
                 val userEmail = user.email ?: ""
 
-                // Reference to the user's data in Firebase
                 val userRef = database.child("Users").child(userId)
 
                 userRef.get().addOnSuccessListener { snapshot ->
