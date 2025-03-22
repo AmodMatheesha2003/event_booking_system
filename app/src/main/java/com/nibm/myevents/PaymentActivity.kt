@@ -11,6 +11,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ServerValue
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class PaymentActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -48,10 +51,14 @@ class PaymentActivity : AppCompatActivity() {
         val user = auth.currentUser
         if (user != null) {
 
+            val timestamp = System.currentTimeMillis()
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+            val formattedDate = dateFormat.format(Date(timestamp))
+
             val ticketData = hashMapOf(
                 "eventId" to eventId,
                 "ticketQuantity" to ticketQuantity,
-                "dateBuy" to ServerValue.TIMESTAMP,
+                "dateBuy" to formattedDate,
                 "totalPrice" to totalPrice,
                 "eventName" to name
             )
