@@ -6,6 +6,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import android.content.Intent
+import android.widget.ImageView
 
 class PaymentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,6 +17,11 @@ class PaymentActivity : AppCompatActivity() {
         val totalAmount: TextView = findViewById(R.id.paymentTotalAmount)
         val ticketQuantityText: TextView = findViewById(R.id.paymentTicketQuantity)
         val confirmPaymentButton: Button = findViewById(R.id.payButton)
+
+        val goBackButton: ImageView = findViewById(R.id.goBackButtonpayement)
+        goBackButton.setOnClickListener {
+            finish()
+        }
 
         val name = intent.getStringExtra("eventName")
         val totalPrice = intent.getDoubleExtra("totalPrice", 0.0)
