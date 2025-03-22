@@ -37,6 +37,7 @@ class EventDetailsActivity : AppCompatActivity() {
         val price = intent.getStringExtra("ticketPrice")
         val amount = intent.getStringExtra("ticketAmount")
         val imageUrl = intent.getStringExtra("imageUrl")
+        val eventId = intent.getStringExtra("eventId")
 
         val goBackButton: ImageView = findViewById(R.id.goBackButton)
 
@@ -86,6 +87,7 @@ class EventDetailsActivity : AppCompatActivity() {
                 putExtra("eventName", name)
                 putExtra("totalPrice", totalPrice)
                 putExtra("ticketQuantity", quantity)
+                putExtra("eventId", eventId)
             }
             startActivity(intent)
         }

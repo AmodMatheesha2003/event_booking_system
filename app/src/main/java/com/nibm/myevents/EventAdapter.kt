@@ -48,6 +48,7 @@ class EventAdapter(private val eventList: ArrayList<Event>) :
                 putExtra("ticketPrice", event.ticketPrice)
                 putExtra("imageUrl", event.imageUrl)
                 putExtra("ticketAmount", event.ticketAmount)
+                putExtra("eventId", event.id)
             }
             holder.itemView.context.startActivity(intent)
         }

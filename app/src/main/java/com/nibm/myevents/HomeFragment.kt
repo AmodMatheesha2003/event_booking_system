@@ -74,7 +74,8 @@ class HomeFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 eventList.clear()
                 for (eventSnapshot in snapshot.children) {
-                    val event = eventSnapshot.getValue(Event::class.java)
+                    val eventId = eventSnapshot.key
+                    val event = eventSnapshot.getValue(Event::class.java)?.copy(id = eventId)
                     if (event != null) {
                         eventList.add(event)
                     }

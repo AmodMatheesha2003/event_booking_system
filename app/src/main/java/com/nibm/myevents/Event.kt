@@ -1,6 +1,7 @@
 package com.nibm.myevents
 
 data class Event(
+    val id: String? = "",
     val date: String? = "",
     val etime: String? = "",
     val eventDetails: String? = "",
