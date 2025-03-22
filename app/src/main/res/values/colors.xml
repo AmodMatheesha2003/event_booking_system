@@ -19,4 +19,9 @@
 
     <color name="light_gray">#D3D3D3</color>
     <color name="avlgreen">#00FF3B</color>
+
+    <color name="greenasuccess">#4CAF50 </color>
+    <color name="lightGreen">#D3F9D8  </color>
+    <color name="redErrorlight">#fc9191</color>
+    <color name="redError">#B71C1C</color>
 </resources>

@@ -61,13 +61,15 @@ class PaymentActivity : AppCompatActivity() {
             val newTicketRef = userTicketsRef.push()
             newTicketRef.setValue(ticketData)
                 .addOnSuccessListener {
-                    Toast.makeText(this, "Payment Successful! Ticket saved.", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this@PaymentActivity, HomeActivity::class.java)
+                    val intent = Intent(this@PaymentActivity, PaymentSuccessfulActivity ::class.java)
                     startActivity(intent)
                     finish()
                 }
                 .addOnFailureListener {
                     Toast.makeText(this, "Failed to save ticket: ${it.message}", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@PaymentActivity, PaymentFailedActivity ::class.java)
+                    startActivity(intent)
+                    finish()
                 }
         } else {
             Toast.makeText(this, "User not authenticated!", Toast.LENGTH_SHORT).show()
