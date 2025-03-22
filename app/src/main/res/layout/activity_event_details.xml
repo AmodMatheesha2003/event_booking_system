@@ -50,7 +50,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:scaleType="centerCrop"
-                android:layout_alignParentTop="true"/>
+                android:layout_alignParentTop="true"
+                android:src="@drawable/loading"/>
 
             <TextView
                 android:id="@+id/eventName"
@@ -60,6 +61,7 @@
                 android:textStyle="bold"
                 android:paddingTop="10dp"
                 android:textColor="@color/black"
+                android:text="Loading..."
                 android:layout_below="@id/eventImage"/>
 
             <LinearLayout
@@ -75,6 +77,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:textColor="@color/black"
+                    android:text="Loading..."
                     android:paddingTop="5dp"/>
 
                 <LinearLayout
@@ -96,6 +99,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:textColor="@color/black"
+                        android:text="Loading..."
                         android:paddingLeft="10dp"/>
                 </LinearLayout>
 
@@ -118,6 +122,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:textColor="@color/black"
+                        android:text="Loading..."
                         android:paddingLeft="10dp"/>
                 </LinearLayout>
 
@@ -140,6 +145,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:textColor="@color/black"
+                        android:text="Loading..."
                         android:paddingLeft="10dp"/>
                 </LinearLayout>
 
@@ -163,6 +169,7 @@
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
+                        android:text="Loading..."
                         android:paddingLeft="10dp"/>
                 </LinearLayout>
 
@@ -189,6 +196,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:textColor="@color/black"
+                        android:text="Loading..."
                         android:paddingLeft="10dp"/>
                 </LinearLayout>
 
