@@ -159,9 +159,12 @@ class VerifyTicketsFragment : Fragment() {
                 }
 
                 if (ticketFound) {
-                    resultTextView.text = "Ticket Verified ✅\n$ticketInfo"
+                    val intent = Intent(requireContext(), ApprovalActivity::class.java)
+                    intent.putExtra("TICKET_INFO", ticketInfo)
+                    startActivity(intent)
                 } else {
-                    resultTextView.text = "No tickets found for this event ❌"
+                    val intent = Intent(requireContext(), DeclineActivity::class.java)
+                    startActivity(intent)
                 }
             }
 

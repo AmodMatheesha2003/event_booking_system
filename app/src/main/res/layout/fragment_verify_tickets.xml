@@ -61,7 +61,7 @@
                 android:id="@+id/resultTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Scanned result will appear here"
+                android:text="Scan a ticket to verify..."
                 android:textSize="16sp"
                 android:textAlignment="center"
                 android:padding="12dp"
