@@ -116,7 +116,7 @@ class VerifyTicketsFragment : Fragment() {
         val verificationText = """
             $contents
         """.trimIndent()
-        
+
         resultTextView.text = verificationText
     }
 }
