@@ -23,10 +23,10 @@ class VerifyTicketsFragment : Fragment() {
 
     private lateinit var scanButton: Button
     private lateinit var resultTextView: TextView
-
     private lateinit var eventsSpinner: Spinner
     private lateinit var database: DatabaseReference
-    private val eventList = mutableListOf<Event>()
+
+    private val eventMap = mutableMapOf<String, String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,11 +63,13 @@ class VerifyTicketsFragment : Fragment() {
                 }
 
                 for (eventSnapshot in snapshot.children) {
+                    val eventId = eventSnapshot.key
                     val event = eventSnapshot.getValue(Event::class.java)
+
                     event?.let {
-                        eventList.add(it)
-                        if (!it.eventName.isNullOrEmpty()) {
+                        if (!it.eventName.isNullOrEmpty() && eventId != null) {
                             eventNames.add(it.eventName!!)
+                            eventMap[it.eventName!!] = eventId
                         }
                     }
                 }
@@ -113,10 +115,60 @@ class VerifyTicketsFragment : Fragment() {
     }
 
     private fun handleScanResult(contents: String) {
-        val verificationText = """
-            $contents
-        """.trimIndent()
+        val userId = extractUID(contents)
+        val selectedEvent = eventsSpinner.selectedItem.toString()
+        val selectedEventId = eventMap[selectedEvent] ?: "Unknown Event ID"
 
-        resultTextView.text = verificationText
+        if (userId == null) {
+            resultTextView.text = "Invalid QR Code: UID not found"
+            return
+        }
+
+        checkUserTickets(userId, selectedEventId)
+    }
+
+    private fun extractUID(contents: String): String? {
+        val regex = Regex("UID:\\s*(\\S+)")
+        val match = regex.find(contents)
+        return match?.groupValues?.get(1)
+    }
+
+    private fun checkUserTickets(userId: String, selectedEventId: String) {
+        val userTicketsRef = database.child("Users").child(userId).child("myTickets")
+
+        userTicketsRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var ticketFound = false
+                var ticketInfo = ""
+
+                for (ticketSnapshot in snapshot.children) {
+                    val eventId = ticketSnapshot.child("eventId").getValue(String::class.java)
+                    val ticketQuantity = ticketSnapshot.child("ticketQuantity").getValue(Int::class.java)
+                    val purchaseDate = ticketSnapshot.child("dateBuy").getValue(String::class.java)
+
+                    if (eventId == selectedEventId) {
+                        ticketFound = true
+                        ticketInfo = """
+                            User ID: $userId
+                            Event ID: $eventId
+                            Purchase Date: $purchaseDate
+                            Ticket Quantity: $ticketQuantity
+                        """.trimIndent()
+                        break
+                    }
+                }
+
+                if (ticketFound) {
+                    resultTextView.text = "Ticket Verified ✅\n$ticketInfo"
+                } else {
+                    resultTextView.text = "No tickets found for this event ❌"
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(requireContext(), "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
+
