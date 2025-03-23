@@ -28,11 +28,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Verify Tickets"
-                android:textSize="22sp"
+                android:textSize="30sp"
                 android:textStyle="bold"
                 android:textColor="@color/lavender"
                 android:paddingBottom="12dp"
                 android:textAlignment="center"/>
+
+            <Spinner
+                android:id="@+id/eventsSpinner"
+                android:layout_width="350sp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/spinner_background"
+                android:padding="12dp"
+                android:elevation="4dp"
+                android:popupBackground="@drawable/spinner_dropdown_background"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/scanButton"
