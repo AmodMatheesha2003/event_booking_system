@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:text="This ticket is not valid. Please verify again."
         android:textSize="15sp"
+        android:textStyle="bold"
         android:textColor="@color/light_black"
         android:layout_marginTop="15dp"/>
 
