@@ -9,6 +9,16 @@ import android.widget.ImageButton
 import android.widget.Button
 import android.content.Intent
 
+import android.widget.FrameLayout
+import android.location.Geocoder
+import android.util.Log
+import java.util.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+
 class EventDetailsActivity : AppCompatActivity() {
     private var quantity: Int = 1
     private lateinit var ticketQuantity: TextView
@@ -40,6 +50,9 @@ class EventDetailsActivity : AppCompatActivity() {
         val eventId = intent.getStringExtra("eventId")
 
         val goBackButton: ImageView = findViewById(R.id.goBackButton)
+
+        val eventLocationString = intent.getStringExtra("eventLocation") ?: ""
+        setupMap(eventLocationString)
 
         eventName.text = name
         eventDetails.text = details
@@ -98,5 +111,36 @@ class EventDetailsActivity : AppCompatActivity() {
         ticketQuantity.text = quantity.toString()
         val totalPrice = ticketPrice * quantity
         totalPriceText.text = "Total Price: ${"%.2f".format(totalPrice)} LKR"
+    }
+
+    private fun setupMap(locationString: String) {
+        val mapContainer = findViewById<FrameLayout>(R.id.mapContainer)
+        val latLng = getLocationFromAddress(locationString) ?: return // Handle invalid location
+
+        val mapFragment = SupportMapFragment.newInstance()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.mapContainer, mapFragment)
+            .commit()
+
+        mapFragment.getMapAsync { googleMap ->
+            googleMap.addMarker(MarkerOptions().position(latLng).title("Event Location"))
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+        }
+    }
+
+    private fun getLocationFromAddress(location: String): LatLng? {
+        val geocoder = Geocoder(this, Locale.getDefault())
+        return try {
+            val addresses = geocoder.getFromLocationName(location, 1)
+            if (!addresses.isNullOrEmpty()) {
+                val address = addresses[0]
+                LatLng(address.latitude, address.longitude)
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("Geocoding", "Error getting location", e)
+            null
+        }
     }
 }
