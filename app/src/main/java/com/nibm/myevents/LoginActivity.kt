@@ -36,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
         val passwordEditText = findViewById<EditText>(R.id.login_password)
         val loginButton = findViewById<Button>(R.id.login_button)
         val signupRedirectText = findViewById<TextView>(R.id.signupRedirectText)
+        val forgotPasswordText = findViewById<TextView>(R.id.forgotPasswordText)
 
         loginButton.setOnClickListener {
             if (!NetworkUtils.isInternetAvailable(this)) {
@@ -56,6 +57,11 @@ class LoginActivity : AppCompatActivity() {
 
         signupRedirectText.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
+            startActivity(intent)
+        }
+
+        forgotPasswordText.setOnClickListener {
+            val intent = Intent(this, ForgotPasswordActivity::class.java)
             startActivity(intent)
         }
     }
