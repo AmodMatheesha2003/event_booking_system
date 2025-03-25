@@ -79,8 +79,23 @@ class PaymentActivity : AppCompatActivity() {
                                 if (newAmount >= 0) {
                                     eventRef.child("ticketAmount").setValue(newAmount.toString())
                                         .addOnSuccessListener {
-                                            sendConfirmationEmail(userEmail, userName, name, ticketQuantity, totalPrice, formattedDate)
-                                            navigateToSuccess()
+                                              val incomeData = hashMapOf(
+                                                    "eventId" to eventId,
+                                                    "customerId" to userId,
+                                                    "ticketQuantity" to ticketQuantity,
+                                                    "dateOfPurchase" to formattedDate,
+                                                    "totalPrice" to totalPrice
+                                                )
+
+                                                dbRef.child("Income").push()
+                                                    .setValue(incomeData)
+                                                    .addOnSuccessListener {
+                                                        sendConfirmationEmail(userEmail, userName, name, ticketQuantity, totalPrice, formattedDate)
+                                                        navigateToSuccess()
+                                                    }
+                                                    .addOnFailureListener { e ->
+                                                        showError("Failed to record income: ${e.message}")
+                                                    }
                                         }
                                         .addOnFailureListener { e ->
                                             showError("Failed to update tickets: ${e.message}")
