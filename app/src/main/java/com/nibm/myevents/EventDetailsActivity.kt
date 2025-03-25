@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import android.widget.ImageButton
 import android.widget.Button
 import android.content.Intent
-
+import android.widget.Toast
 import android.widget.FrameLayout
 import android.location.Geocoder
 import android.util.Log
@@ -38,6 +38,7 @@ class EventDetailsActivity : AppCompatActivity() {
         val ticketAmount: TextView = findViewById(R.id.ticketAmount)
         val eventImage: ImageView = findViewById(R.id.eventImage)
         val payButton: Button = findViewById(R.id.payButton)
+        val availableTextView: TextView = findViewById(R.id.avl)
 
         val name = intent.getStringExtra("eventName")
         val details = intent.getStringExtra("eventDetails")
@@ -50,6 +51,15 @@ class EventDetailsActivity : AppCompatActivity() {
         val eventId = intent.getStringExtra("eventId")
 
         val goBackButton: ImageView = findViewById(R.id.goBackButton)
+
+        val checkTicketCount = amount?.toIntOrNull() ?: 0
+        if (checkTicketCount == 0) {
+            availableTextView.text = "SOLD OUT"
+            availableTextView.setTextColor(resources.getColor(R.color.redError, theme))
+        } else {
+            availableTextView.text = "AVL"
+            availableTextView.setTextColor(resources.getColor(R.color.avlgreen, theme))
+        }
 
         val eventLocationString = intent.getStringExtra("eventLocation") ?: ""
         setupMap(eventLocationString)
@@ -96,13 +106,22 @@ class EventDetailsActivity : AppCompatActivity() {
 
          payButton.setOnClickListener {
             val totalPrice = ticketPrice * quantity
-            val intent = Intent(this, PaymentActivity::class.java).apply {
-                putExtra("eventName", name)
-                putExtra("totalPrice", totalPrice)
-                putExtra("ticketQuantity", quantity)
-                putExtra("eventId", eventId)
+            if(checkTicketCount > 0){
+                if(quantity <= checkTicketCount){
+                    val intent = Intent(this, PaymentActivity::class.java).apply {
+                        putExtra("eventName", name)
+                        putExtra("totalPrice", totalPrice)
+                        putExtra("ticketQuantity", quantity)
+                        putExtra("eventId", eventId)
+                    }
+                    startActivity(intent)
+                }else{
+                    Toast.makeText(this, "You can only buy $checkTicketCount tickets.", Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                Toast.makeText(this, "Tickets are sold out!", Toast.LENGTH_SHORT).show()
             }
-            startActivity(intent)
+
         }
 
     }
@@ -115,7 +134,7 @@ class EventDetailsActivity : AppCompatActivity() {
 
     private fun setupMap(locationString: String) {
         val mapContainer = findViewById<FrameLayout>(R.id.mapContainer)
-        val latLng = getLocationFromAddress(locationString) ?: return // Handle invalid location
+        val latLng = getLocationFromAddress(locationString) ?: return
 
         val mapFragment = SupportMapFragment.newInstance()
         supportFragmentManager.beginTransaction()
