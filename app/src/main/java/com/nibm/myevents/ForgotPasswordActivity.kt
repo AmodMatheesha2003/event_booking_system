@@ -28,6 +28,12 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
         sendOtpButton.setOnClickListener {
             val email = emailEditText.text.toString().trim()
+
+            if (!NetworkUtils.isInternetAvailable(this)) {
+                Toast.makeText(this, "No internet connection. Please check your network.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             if (email.isEmpty()) {
                 Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener

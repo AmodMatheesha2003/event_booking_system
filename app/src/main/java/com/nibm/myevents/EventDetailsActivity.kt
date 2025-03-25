@@ -106,6 +106,12 @@ class EventDetailsActivity : AppCompatActivity() {
 
          payButton.setOnClickListener {
             val totalPrice = ticketPrice * quantity
+
+            if (!NetworkUtils.isInternetAvailable(this)) {
+                Toast.makeText(this, "No internet connection. Please check your network.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             if(checkTicketCount > 0){
                 if(quantity <= checkTicketCount){
                     val intent = Intent(this, PaymentActivity::class.java).apply {

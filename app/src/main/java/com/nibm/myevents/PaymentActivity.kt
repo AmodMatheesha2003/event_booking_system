@@ -45,6 +45,11 @@ class PaymentActivity : AppCompatActivity() {
         ticketQuantityText.text = "Ticket Quantity: $ticketQuantity"
 
         confirmPaymentButton.setOnClickListener {
+            if (!NetworkUtils.isInternetAvailable(this)) {
+                Toast.makeText(this, "No internet connection. Please check your network.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             val user = auth.currentUser
             if (user != null) {
                 val userId = user.uid

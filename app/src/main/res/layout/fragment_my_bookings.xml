@@ -12,7 +12,7 @@
         android:id="@+id/descriptionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="My Bookings"
+        android:text="My Tickets"
         android:textSize="30sp"
         android:textStyle="bold"
         android:textColor="@color/white"/>
