@@ -17,6 +17,8 @@ import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 import android.widget.Button
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.Context
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
@@ -45,6 +47,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         logoutButton.setOnClickListener {
             auth.signOut()
+
+            val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("appPreferences", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putBoolean("isLoggedIn", false)
+            editor.apply()
+
             val intent = Intent(requireContext(), LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
