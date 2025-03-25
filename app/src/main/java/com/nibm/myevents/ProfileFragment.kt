@@ -25,9 +25,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
     private lateinit var profileImageView: ImageView
-    private lateinit var nameTextView: TextView
+    private lateinit var nameEditText: TextView
     private lateinit var emailTextView: TextView
     private lateinit var logoutButton: Button
+    private lateinit var saveProfileButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,11 +40,16 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         database = FirebaseDatabase.getInstance().reference
 
         profileImageView = view.findViewById(R.id.profileImage)
-        nameTextView = view.findViewById(R.id.nameTextView)
+        nameEditText = view.findViewById(R.id.nameEditText) // Changed from TextView to EditText
         emailTextView = view.findViewById(R.id.emailTextView)
         logoutButton = view.findViewById(R.id.logoutButton)
+        saveProfileButton = view.findViewById(R.id.save_profile_button)
 
         loadUserProfile()
+
+        saveProfileButton.setOnClickListener {
+            saveProfileChanges()
+        }
 
         logoutButton.setOnClickListener {
             auth.signOut()
@@ -73,7 +79,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         val email = snapshot.child("email").getValue(String::class.java)
                         val profileImageUrl = snapshot.child("profileImageUrl").getValue(String::class.java)
 
-                        nameTextView.text = name ?: "Name not available"
+                        nameEditText.text = name ?: "Name not available"
                         emailTextView.text = email ?: "Email not available"
 
                         if (!profileImageUrl.isNullOrEmpty()) {
@@ -92,4 +98,23 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             })
         }
     }
+
+    private fun saveProfileChanges() {
+        val user = auth.currentUser
+        val userId = user?.uid
+        val newName = nameEditText.text.toString().trim()
+
+        if (userId != null && newName.isNotEmpty()) {
+            database.child("Users").child(userId).child("name").setValue(newName)
+                .addOnSuccessListener {
+                    Toast.makeText(requireContext(), "Profile updated successfully!", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { error ->
+                    Toast.makeText(requireContext(), "Failed to update profile: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            Toast.makeText(requireContext(), "Name cannot be empty", Toast.LENGTH_SHORT).show()
+        }
+    }
 }
+
