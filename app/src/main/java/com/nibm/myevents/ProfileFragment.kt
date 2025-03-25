@@ -40,7 +40,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         database = FirebaseDatabase.getInstance().reference
 
         profileImageView = view.findViewById(R.id.profileImage)
-        nameEditText = view.findViewById(R.id.nameEditText) // Changed from TextView to EditText
+        nameEditText = view.findViewById(R.id.nameEditText)
         emailTextView = view.findViewById(R.id.emailTextView)
         logoutButton = view.findViewById(R.id.logoutButton)
         saveProfileButton = view.findViewById(R.id.save_profile_button)
@@ -85,7 +85,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         if (!profileImageUrl.isNullOrEmpty()) {
                             Picasso.get().load(profileImageUrl).into(profileImageView)
                         } else {
-                            profileImageView.setImageResource(R.drawable.sample_profile) // Default image
+                            profileImageView.setImageResource(R.drawable.sample_profile)
                         }
                     } else {
                         Toast.makeText(requireContext(), "User not found", Toast.LENGTH_SHORT).show()

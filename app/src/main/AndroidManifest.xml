@@ -19,6 +19,11 @@
             android:value="AIzaSyAIuMNKp_aa_Jtnkgjh6go3QH-xtgAJcVI" />
 
         <activity
+            android:name=".OTPActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ForgotPasswordActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
