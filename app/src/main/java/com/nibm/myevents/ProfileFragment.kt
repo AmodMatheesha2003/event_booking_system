@@ -1,24 +1,25 @@
 package com.nibm.myevents
 
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
-import android.widget.Button
-import android.content.Intent
-import android.content.SharedPreferences
-import android.content.Context
+import java.io.ByteArrayOutputStream
+import java.io.IOException
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
@@ -29,6 +30,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private lateinit var emailTextView: TextView
     private lateinit var logoutButton: Button
     private lateinit var saveProfileButton: Button
+    private lateinit var uploadIcon: ImageView
+
+    private val PICK_IMAGE_REQUEST = 1
+    private val CAMERA_REQUEST_CODE = 2
+    private var imageUri: Uri? = null
+    private var selectedBitmap: Bitmap? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,8 +51,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         emailTextView = view.findViewById(R.id.emailTextView)
         logoutButton = view.findViewById(R.id.logoutButton)
         saveProfileButton = view.findViewById(R.id.save_profile_button)
+        uploadIcon = view.findViewById(R.id.uploadIcon)
 
         loadUserProfile()
+
+        uploadIcon.setOnClickListener {
+            showImagePickerDialog()
+        }
 
         saveProfileButton.setOnClickListener {
             saveProfileChanges()
@@ -53,18 +65,99 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         logoutButton.setOnClickListener {
             auth.signOut()
-
-            val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("appPreferences", Context.MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-            editor.putBoolean("isLoggedIn", false)
-            editor.apply()
-
+            val sharedPreferences = requireContext().getSharedPreferences("appPreferences", Context.MODE_PRIVATE)
+            sharedPreferences.edit().putBoolean("isLoggedIn", false).apply()
             val intent = Intent(requireContext(), LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
 
         return view
+    }
+
+    private fun showImagePickerDialog() {
+        val options = arrayOf("Take Photo", "Choose from Gallery")
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Select an Option")
+        builder.setItems(options) { _, which ->
+            when (which) {
+                0 -> openCamera()
+                1 -> openGallery()
+            }
+        }
+        builder.show()
+    }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "image/*"
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
+
+    private fun openCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, CAMERA_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                PICK_IMAGE_REQUEST -> {
+                    imageUri = data?.data
+                    try {
+                        selectedBitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri)
+                        profileImageView.setImageBitmap(selectedBitmap)
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                        Toast.makeText(requireContext(), "Failed to load image", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                CAMERA_REQUEST_CODE -> {
+                    selectedBitmap = data?.extras?.get("data") as Bitmap
+                    profileImageView.setImageBitmap(selectedBitmap)
+                }
+            }
+        }
+    }
+
+    private fun saveProfileChanges() {
+        val user = auth.currentUser
+        val userId = user?.uid
+        val newName = nameEditText.text.toString().trim()
+
+        if (userId != null) {
+            val userRef = database.child("Users").child(userId)
+
+            if (newName.isNotEmpty()) {
+                userRef.child("name").setValue(newName)
+                Toast.makeText(requireContext(), "Profile updated successfully!", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(requireContext(), "Name cannot be empty", Toast.LENGTH_SHORT).show()
+            }
+
+            if (selectedBitmap != null) {
+                val imageBase64 = convertBitmapToBase64(selectedBitmap!!)
+                userRef.child("profileImage").setValue(imageBase64)
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Profile updated successfully!", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { error ->
+                        Toast.makeText(requireContext(), "Failed to update profile: ${error.message}", Toast.LENGTH_SHORT).show()
+                    }
+            }
+        } else {
+            Toast.makeText(requireContext(), "Error: User not found", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun convertBitmapToBase64(bitmap: Bitmap): String {
+        val outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        val byteArray = outputStream.toByteArray()
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
 
     private fun loadUserProfile() {
@@ -77,13 +170,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     if (snapshot.exists()) {
                         val name = snapshot.child("name").getValue(String::class.java)
                         val email = snapshot.child("email").getValue(String::class.java)
-                        val profileImageUrl = snapshot.child("profileImageUrl").getValue(String::class.java)
+                        val profileImageBase64 = snapshot.child("profileImage").getValue(String::class.java)
 
                         nameEditText.text = name ?: "Name not available"
                         emailTextView.text = email ?: "Email not available"
 
-                        if (!profileImageUrl.isNullOrEmpty()) {
-                            Picasso.get().load(profileImageUrl).into(profileImageView)
+                        if (!profileImageBase64.isNullOrEmpty()) {
+                            val imageBytes = Base64.decode(profileImageBase64, Base64.DEFAULT)
+                            val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                            profileImageView.setImageBitmap(bitmap)
                         } else {
                             profileImageView.setImageResource(R.drawable.sample_profile)
                         }
@@ -98,23 +193,4 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             })
         }
     }
-
-    private fun saveProfileChanges() {
-        val user = auth.currentUser
-        val userId = user?.uid
-        val newName = nameEditText.text.toString().trim()
-
-        if (userId != null && newName.isNotEmpty()) {
-            database.child("Users").child(userId).child("name").setValue(newName)
-                .addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Profile updated successfully!", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener { error ->
-                    Toast.makeText(requireContext(), "Failed to update profile: ${error.message}", Toast.LENGTH_SHORT).show()
-                }
-        } else {
-            Toast.makeText(requireContext(), "Name cannot be empty", Toast.LENGTH_SHORT).show()
-        }
-    }
 }
-
