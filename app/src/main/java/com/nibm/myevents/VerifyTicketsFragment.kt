@@ -140,9 +140,10 @@ class VerifyTicketsFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var ticketFound = false
                 var ticketInfo = ""
+                var eventId = ""
 
                 for (ticketSnapshot in snapshot.children) {
-                    val eventId = ticketSnapshot.child("eventId").getValue(String::class.java)
+                    eventId = ticketSnapshot.child("eventId").getValue(String::class.java) ?: ""
                     val ticketQuantity = ticketSnapshot.child("ticketQuantity").getValue(Int::class.java)
                     val purchaseDate = ticketSnapshot.child("dateBuy").getValue(String::class.java)
 
@@ -161,6 +162,7 @@ class VerifyTicketsFragment : Fragment() {
                 if (ticketFound) {
                     val intent = Intent(requireContext(), ApprovalActivity::class.java)
                     intent.putExtra("TICKET_INFO", ticketInfo)
+                    intent.putExtra("TICKET_eventId", eventId)
                     startActivity(intent)
                 } else {
                     val intent = Intent(requireContext(), DeclineActivity::class.java)

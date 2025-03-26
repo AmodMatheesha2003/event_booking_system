@@ -34,7 +34,6 @@
         android:textColor="@color/light_black"
         android:layout_marginTop="15dp"/>
 
-    <!-- Continue Button -->
     <Button
         android:id="@+id/continueButton"
         android:layout_width="150dp"
