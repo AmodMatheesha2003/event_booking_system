@@ -48,7 +48,7 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(this, "Passwords do not match!", Toast.LENGTH_SHORT).show()
             } else {
                 generateOtp()
-                sendOtpToEmail(email)
+                sendOtpToEmail(email, name)
                 val intent = Intent(this, OTPActivity::class.java)
                 intent.putExtra("userName", name)
                 intent.putExtra("userEmail", email)
@@ -69,9 +69,20 @@ class SignupActivity : AppCompatActivity() {
         otp = (1000..9999).random().toString()
     }
 
-    private fun sendOtpToEmail(email: String) {
-        val subject = "Your OTP Code"
-        val messageBody = "Your OTP code is $otp. Please use this to verify your account."
+    private fun sendOtpToEmail(email: String, userName: String) {
+        val subject = "Account Verification - OTP Code"
+        val messageBody = """
+            Dear $userName,
+
+            Thank you for signing up with MyEvents. To complete your registration, please use the One-Time Password (OTP) provided below to verify your account:
+
+            OTP Code: $otp
+
+            This code will expire in 10 minutes. Please do not share it with anyone. If you did not request this verification, please ignore this email.
+
+            Regards,
+            The MyEvents Team
+            """.trimIndent()
         val javaMailAPI = JavaMailAPI(email, subject, messageBody)
         javaMailAPI.execute()
     }
