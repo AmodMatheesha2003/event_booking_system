@@ -15,6 +15,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.LinearLayoutManager
+import android.widget.EditText
+import android.widget.ImageView
 
 class HomeFragment : Fragment() {
 
@@ -25,6 +27,8 @@ class HomeFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
     private lateinit var greetingText: TextView
+    private lateinit var searchEditText: EditText
+    private lateinit var searchButton: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +50,15 @@ class HomeFragment : Fragment() {
         recyclerView.adapter = adapter
 
         database = FirebaseDatabase.getInstance().getReference("eventForm")
+
+        searchEditText = view.findViewById(R.id.searchEditText)
+        searchButton = view.findViewById(R.id.searchButton)
+
+        searchButton.setOnClickListener {
+            val query = searchEditText.text.toString().trim()
+            searchEvents(query)
+        }
+
         fetchEvents()
 
         return view
@@ -88,4 +101,20 @@ class HomeFragment : Fragment() {
             }
         })
     }
+
+    private fun searchEvents(query: String) {
+        if (query.isEmpty()) {
+            adapter = EventAdapter(eventList)
+        } else {
+            val filteredList = eventList.filter { it.eventName?.contains(query, true) == true }
+            if (filteredList.isEmpty()) {
+                Toast.makeText(requireContext(), "No events found", Toast.LENGTH_SHORT).show()
+                adapter = EventAdapter(eventList)
+            } else {
+                adapter = EventAdapter(ArrayList(filteredList))
+            }
+        }
+        recyclerView.adapter = adapter
+    }
+
 }
