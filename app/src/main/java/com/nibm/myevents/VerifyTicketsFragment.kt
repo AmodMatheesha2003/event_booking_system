@@ -190,6 +190,7 @@ class VerifyTicketsFragment : Fragment() {
                     val intent = Intent(requireContext(), ApprovalActivity::class.java)
                     intent.putExtra("TICKET_INFO", ticketInfo)
                     intent.putExtra("TICKET_eventId", eventId)
+                    intent.putExtra("TICKET_userId", userId)
                     startActivity(intent)
                 } else {
                     val intent = Intent(requireContext(), DeclineActivity::class.java)
