@@ -85,5 +85,6 @@ class SignupActivity : AppCompatActivity() {
             """.trimIndent()
         val javaMailAPI = JavaMailAPI(email, subject, messageBody)
         javaMailAPI.execute()
+        Toast.makeText(this, "OTP email sent! Please check your inbox.", Toast.LENGTH_LONG).show()
     }
 }
