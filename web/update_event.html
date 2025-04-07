@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Events</title>
+  <link rel="stylesheet" href="style_display.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="logo.png">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-logo">MyEvents</div>
+    <ul class="nav-links">
+      <li><a href="index.html">View Event</a></li>
+      <li><a href="addevents.html">Add Event</a></li>
+      <li><a href="eventincome.html"> Event Income</a></li>
+      <li><a href="eventorganizer.html"> Event Organizer</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Update Event</h1>
+    <form id="updateEventForm">
+      <input type="hidden" id="eventId">
+
+      <div class="form-group">
+        <label for="eventName">Event Name:</label>
+        <input type="text" id="eventName" required>
+      </div>
+
+      <div class="form-group">
+        <label for="eventDetails">Event Details:</label>
+        <textarea id="eventDetails" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="ticketPrice">Ticket Price:</label>
+        <input type="number" id="ticketPrice" required>
+      </div>
+
+      <div class="form-group">
+        <label for="ticketAmount">Ticket Amount:</label>
+        <input type="number" id="ticketAmount" required>
+      </div>
+
+      <div class="form-group">
+        <label for="location">Location:</label>
+        <input type="text" id="location" required>
+      </div>
+
+      <div class="form-group">
+        <label for="date">Date:</label>
+        <input type="date" id="date" required>
+      </div>
+
+      <div class="form-group">
+        <label for="stime">Start Time:</label>
+        <input type="time" id="stime" required>
+      </div>
+
+      <div class="form-group">
+        <label for="etime">End Time:</label>
+        <input type="time" id="etime" required>
+      </div>
+
+      <div class="form-group">
+        <label for="imageUrl">Image URL:</label>
+        <input type="url" id="imageUrl" required>
+      </div>
+
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js"></script>
+  <script type="module" src="./updateEvent.js"></script>
+
+</body>
+</html>

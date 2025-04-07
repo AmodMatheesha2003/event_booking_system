@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Organizers</title>
+  <link rel="stylesheet" href="style_display.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="logo.png">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-logo">MyEvents</div>
+    <ul class="nav-links">
+      <li><a href="index.html">View Event</a></li>
+      <li><a href="addeventS.html">Add Event</a></li>
+      <li><a href="eventincome.html"> Event Income</a></li>
+      <li><a href="eventorganizer.html"> Event Organizers</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Add Event Organizer</h1>
+    
+    <div class="input-container">
+      <input type="email" id="emailInput" placeholder="Enter Organizer's Email">
+      <button id="giveAccessBtn">Give Access</button>
+    </div>
+  </div>
+  <div class="container">
+    <h1>Event Organizers</h1>  
+  </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Access</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="event-income-table">
+        </tbody>
+    </table>
+  
+
+  <script type="module" src="eventorganizer.js"></script>
+</body>
+</html>
